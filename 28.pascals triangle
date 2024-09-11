@@ -1,0 +1,32 @@
+#include <stdio.h>
+int factorial(int n) {
+    int result = 1;
+    for (int i = 1; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+int nCr(int n, int r) {
+    return factorial(n) / (factorial(r) * factorial(n - r));
+}
+void printPascalTriangle(int n) {
+    for (int i = 0; i < n; i++) {
+        for (int k = 0; k < n - i; k++) {
+            printf(" ");
+        }
+        for (int j = 0; j <= i; j++) {
+            printf("%d ", nCr(i, j));
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+	printf("k.harsha vardhan\n");
+    int n;
+    printf("Enter the number of rows: ");
+    scanf("%d", &n);
+    printPascalTriangle(n);
+
+    return 0;
+}
