@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+void insertIntoSortedList(int list[], int *size, int number) {
+    int i, pos = *size;
+    for (i = *size - 1; (i >= 0 && list[i] > number); i--) {
+        list[i + 1] = list[i];
+    }
+    list[i + 1] = number;
+    (*size)++;
+}
+void printList(int list[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", list[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+	printf("k.harsha vardhan 192211503\n");
+    int list[MAX_SIZE], size, number;
+    printf("Enter the number of elements in the list: ");
+    scanf("%d", &size);
+    printf("Enter %d sorted integers:\n", size);
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &list[i]);
+    }
+    printf("Enter the number to be inserted: ");
+    scanf("%d", &number);
+    insertIntoSortedList(list, &size, number);
+    printf("List after insertion:\n");
+    printList(list, size);
+
+    return 0;
+}
