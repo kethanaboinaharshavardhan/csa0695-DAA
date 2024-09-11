@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <limits.h>
+#include <stdbool.h>
+
+#define N 4 
+int minCost(int cost[N][N], int row, int column, int assignment[], int n) {
+    if (row == n) {
+        int totalCost = 0;
+        for (int i = 0; i < n; i++) {
+            totalCost += cost[i][assignment[i]];
+        }
+        return totalCost;
+    }
+
+    int min = INT_MAX;
+    for (int i = 0; i < n; i++) {
+        if (assignment[i] == -1) {
+            assignment[i] = row;
+            int currentCost = minCost(cost, row + 1, column, assignment, n);
+            if (currentCost < min) {
+                min = currentCost;
+            }
+            assignment[i] = -1;
+        }
+    }
+    return min;
+}
+
+int main() {
+	printf("k.harsha vardhan 192211503\n");
+    int cost[N][N] = {
+        {10, 2, 8, 15},
+        {3, 9, 11, 10},
+        {15, 14, 10, 12},
+        {8, 12, 13, 10}
+    };
+
+    int assignment[N];
+    for (int i = 0; i < N; i++) {
+        assignment[i] = -1; 
+    }
+
+    int result = minCost(cost, 0, 0, assignment, N);
+    printf("Minimum cost for assignment: %d\n", result);
+
+    return 0;
+}
