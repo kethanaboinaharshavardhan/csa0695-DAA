@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <limits.h>
+#define INF INT_MAX
+
+int tsp(int graph[][4], int n, int pos, int mask, int dp[][16]) {
+    if (mask == (1 << n) - 1) {
+        return graph[pos][0];
+    }
+    if (dp[pos][mask] != -1) {
+        return dp[pos][mask];
+    }
+    int ans = INF;
+    for (int city = 0; city < n; city++) {
+        if ((mask & (1 << city)) == 0 && graph[pos][city] > 0) {
+            int new_cost = graph[pos][city] + tsp(graph, n, city, mask | (1 << city), dp);
+            if (new_cost < ans) {
+                ans = new_cost;
+            }
+        }
+    }
+    return dp[pos][mask] = ans;
+}
+
+int main() {
+	printf("k.harsha vardhan 192211503\n");
+    int graph[4][4] = {
+        {0, 10, 15, 20},
+        {10, 0, 35, 25},
+        {15, 35, 0, 30},
+        {20, 25, 30, 0}
+    };
+    int n = 4;
+    int dp[4][16];
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < (1 << n); j++) {
+            dp[i][j] = -1;
+        }
+    }
+    int min_cost = tsp(graph, n, 0, 1, dp);
+
+    // Output the result
+    printf("The minimum cost to visit all cities: %d\n", min_cost);
+
+    return 0;
+}
